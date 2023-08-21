@@ -70,7 +70,8 @@ let QandA={
           ],
           qrAns: "Managing hardware resources"
         }
-      ],
+      ]
+    ,
       
     js: [
         {
