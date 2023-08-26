@@ -6,9 +6,9 @@ let highScores =[];
 let QuizApp = {
     loading:`<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADwUlEQVR4nO1ZTU8UQRCdRKOe9Kxiokb9BwKCiYloQqKwVZvsCdmqVeRmIsjH0YMf6D8QIh6ECyEkinjE/6AXBFETBHG7B1QwrB7ImprpGRZ2YZc47DJmX1JJp2e2u1/Xq56qXssqo4wySob5hmsnNFCrmLStMMIGJg2c0shpx4BT0meFCd+iiZOycAW0qpAGHANa1cArofKMFjkhpxXwc69PyLh9dNMKHRGkAa9PAQ+Gjsi8E+RGWsCDrhlpReh4rt/Y2FKhgYYV0pKxERXl04EvLh2L7VPIjzXwV4U0p5B7pC9PsK9kBPuKjfH4ZiQU0IL/rjHps2Pxo4ESUUCPsiZCerjVb2T3RUpim3lCIJ5wx6RXsnAxDTxm5hkKlgjSnAycjHBNMkq1hshcQGMvyXh2xu4vRPiY8cqPIObIJhKlWp8I8GwwY/NPhwi2VBSBCPdslJYGehDM2DRi4mhMyJjAf23mGLZ2INh7nEAHnhUSWwX7dqCg+YxCtnMFe7LhxikrTHACHHlIZOZIDWg4dCTKKKMEsJGqFSbaxOzGRJUVNizGWg/5R/C6I5/H5Nl2B2qV9GJbPwwI2pBQyN81cq+YaUtGMbodEh8zdmK6mGRspGqPRGaOJlm1R8aGeGXB9YQGfquR3hW7jtBRumPmfJL1zPWOpEfthRNxSBSfiAJuN0rozVobcp/rrURbYdJCnl6TFn2w65sOWkWC3Zio8qWVUePLXYAkkWZdZwsaTMg4tQRySzFJePDqERMT4oU+j4QCfmmFBYuykUijOYq5F6XY2H+GDfFK94NItwuWUxllrEFB4qoCGtfIvzTQsrQV0hUrTNDI97NyKvSP/ntWWDxhFvxbI3cobDospoE6TV86cM8kkeoV0BeFNCPtIMZUwG/M7ndsfKYj1GWyivEg5lqbFGkm4zyf2erd9IW7e23ky5JuiNnRxCXp2+xOS7xgbSTSeP2ImWupJESSkDivgaZyaH5S7sRKTiQp0kKa2UpaDgmjbZOvObWEn7sBp+S20ifinlRyf9WZRQS5e0eklQ8inQxPPJ2qv7XfeyZtjdRvdvi9JzMJZD/YI9TleMH1RLcC/rMjwZ4PEhOeJzJJePhMdMAv2CJU5/XLEburjl9tCqJcdUS+wkh2XYnMgJZL/kEskEhfwRVeqSBHbF5pIX8y71y0divSEuzIk0bb/bLwDfHxzHhjItc3ZVfB/e/EHL9uYPcaObmeAE4tQPM5KwxIRrhGjtjsvwl4IjQk1sksQnXedae007HYHv+FMv5z/AX1u7rsGeHtxQAAAABJRU5ErkJggg==" class="animate-spin">`,
     
-    startPage:`<div class="quizName text-4xl font-bold "><span class="curlyBraces text-[#EB5160]">{</span><span class="text-[#DFE0E2]">dev</span><span class="curlyBraces text-[#EB5160]">}</span><span class="text-[#DFE0E2]">    quiz</span></div><button class="startGame w-72 mt-10 h-12 text-2xl bg-[#DFE0E2] hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">Start Game</button><button class="highScore w-72 mt-5 h-12 text-2xl bg-[#DFE0E2] hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">High Score</button>`,
+    startPage:`<div class="flex justify-center items-center flex-col bg-[url('./image/illustration.svg')] bg-top bg-cover w-48 h-40 m-10 animate__animated animate__fadeInDown"></div><div class="quizName text-4xl font-bold "><span class="curlyBraces text-[#EB5160]">{</span><span class="text-[#DFE0E2]">dev</span><span class="curlyBraces text-[#EB5160]">}</span><span class="text-[#DFE0E2]">quiz</span></div><button class="startGame w-72 mt-10 h-12 text-2xl bg-[#EB5160] rounded ease-in-out transition-colors delay-150 shadow-lg hover:shadow-[#eb5161b9] text-[#DFE0E2]">Start Game</button><button class="highScore w-72 mt-5 h-12 text-2xl bg-[#EB5160] rounded shadow-lg hover:shadow-[#eb5161b9]  ease-in-out transition-all delay-150 text-[#DFE0E2]">High Score</button>`,
 
-    selectQuiz: `<div class="selectQuiz flex justify-center items-center flex-col"><div class="header text-[#DFE0E2] text-4xl">--SELECT QUIZ--</div><button class="general w-72 mt-5 h-12 text-2xl bg-[#DFE0E2] hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">General</button><button class="js w-72 mt-5 h-12 text-2xl bg-[#DFE0E2] hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">JavaScript</button><button class="html w-72 mt-5 h-12 text-2xl bg-[#DFE0E2] hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">HTML</button><button class="css w-72 mt-5 h-12 text-2xl bg-[#DFE0E2] hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">CSS</button><button class="cpp w-72 mt-5 h-12 text-2xl bg-[#DFE0E2] hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">C++</button><button class="python w-72 mt-5 h-12 text-2xl bg-[#DFE0E2] hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">Python</button></div>`,
+    selectQuiz: `<div class="selectQuiz flex justify-center items-center flex-col"><div class="header text-[#EB5160] text-4xl">--SELECT QUIZ--</div><button class="general w-72 mt-5 h-12 text-2xl bg-[#EB5160] rounded ease-in-out transition-colors delay-150 shadow-lg hover:shadow-[#eb5161b9] text-[#DFE0E2]">    General</button><button class="js w-72 mt-5 h-12 text-2xl bg-[#EB5160] rounded ease-in-out transition-colors delay-150 shadow-lg hover:shadow-[#eb5161b9] text-[#DFE0E2]">    JavaScript</button><button class="html w-72 mt-5 h-12 text-2xl bg-[#EB5160] rounded ease-in-out transition-colors delay-150 shadow-lg hover:shadow-[#eb5161b9] text-[#DFE0E2]">    HTML</button><button class="css w-72 mt-5 h-12 text-2xl bg-[#EB5160] rounded ease-in-out transition-colors delay-150 shadow-lg hover:shadow-[#eb5161b9] text-[#DFE0E2]">    CSS</button><button class="cpp w-72 mt-5 h-12 text-2xl bg-[#EB5160] rounded ease-in-out transition-colors delay-150 shadow-lg hover:shadow-[#eb5161b9] text-[#DFE0E2]">    C++</button><button class="python w-72 mt-5 h-12 text-2xl bg-[#EB5160] rounded ease-in-out transition-colors delay-150 shadow-lg hover:shadow-[#eb5161b9] text-[#DFE0E2]">    Python</button></div>    `,
     
     finalScorePage:`
     <div class="fPage flex justify-center items-center flex-col">
@@ -21,22 +21,22 @@ let QuizApp = {
         
         <div class="input_username">
             <input type="text" placeholder="enter your name" id="userName" class="w-[21rem] lg:w-[30rem] mt-6 h-12 hover:outline-none text-lg bg-[#DFE0E2] border-2 placeholder:text-gray-500 px-4
-            border-[#EB5160] ease-in-out transition-colors delay-150">
+             ease-in-out transition-colors delay-150 rounded focus:border-none focus:outline-none">
         </div>
         <div class="buttons flex flex-col items-center">
-        <button class="save w-[21rem] lg:w-[30rem] mt-6 h-12 text-lg bg-[#DFE0E2] text-black hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150 rounded opacity-50 cursor-not-allowed">
+        <button class="save w-[21rem] lg:w-[30rem] mt-6 h-12 text-[#DFE0E2] bg-[#EB5160] shadow-lg hover:shadow-[#eb5161b9] ease-in-out transition-all delay-150 rounded font-Montserrat font-medium hover:outline-none hover:border-none cursor-not-allowed">
             Save
         </button>
-        <button class="play_again w-[21rem] lg:w-[30rem] mt-6 h-12 text-lg bg-[#DFE0E2] text-black hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">
+        <button class="play_again w-[21rem] lg:w-[30rem] mt-6 h-12 text-[#DFE0E2] bg-[#EB5160] shadow-lg hover:shadow-[#eb5161b9] ease-in-out transition-all delay-150 rounded font-Montserrat font-medium hover:outline-none hover:border-none">
             Play Again
         </button>
-        <button class="review_quiz w-[21rem] lg:w-[30rem] mt-6 h-12 text-lg bg-[#DFE0E2] text-black hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">
+        <button class="review_quiz w-[21rem] lg:w-[30rem] mt-6 h-12 text-[#DFE0E2] bg-[#EB5160] shadow-lg hover:shadow-[#eb5161b9] ease-in-out transition-all delay-150 rounded font-Montserrat font-medium hover:outline-none hover:border-none">
             Review Quiz
         </button>
-        <button class="select_newquiz w-[21rem] lg:w-[30rem] mt-6 h-12 text-lg bg-[#DFE0E2] text-black hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">
+        <button class="select_newquiz w-[21rem] lg:w-[30rem] mt-6 h-12 text-[#DFE0E2] bg-[#EB5160] shadow-lg hover:shadow-[#eb5161b9] ease-in-out transition-all delay-150 rounded font-Montserrat font-medium hover:outline-none hover:border-none">
             Select New Quiz
         </button>
-        <button class="go_home w-[21rem] lg:w-[30rem] mt-6 h-12 text-lg bg-[#DFE0E2] text-black hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">
+        <button class="go_home w-[21rem] lg:w-[30rem] mt-6 h-12 text-[#DFE0E2] bg-[#EB5160] shadow-lg hover:shadow-[#eb5161b9] ease-in-out transition-all delay-150 rounded font-Montserrat font-medium hover:outline-none hover:border-none">
             Go Home
         </button>
         </div>
@@ -110,10 +110,10 @@ let QuizApp = {
                 ${(QandA[qType])[qNum].q}
             </div>
         <div class="options flex flex-col text-[#DFE0E2">
-            <button class="opA w-[21rem] lg:w-[30rem] mt-6 h-14 text-lg bg-[#DFE0E2] hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">${QandA[qType][qNum].qAns[0]}</button>
-            <button class="opB w-[21rem] lg:w-[30rem] mt-6 h-14 text-lg bg-[#DFE0E2] hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">${QandA[qType][qNum].qAns[1]}</button>
-            <button class="opC w-[21rem] lg:w-[30rem] mt-6 h-14 text-lg bg-[#DFE0E2] hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">${QandA[qType][qNum].qAns[2]}</button>
-            <button class="opD w-[21rem] lg:w-[30rem] mt-6 h-14 text-lg bg-[#DFE0E2] hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">${QandA[qType][qNum].qAns[3]}</button>
+            <button class="opA w-[21rem] lg:w-[30rem] mt-6 h-14 text-xl text-[#DFE0E2] bg-[#EB5160] shadow-lg hover:shadow-[#eb5161b9] ease-in-out transition-all delay-150 rounded font-Montserrat hover:outline-none hover:border-none">${QandA[qType][qNum].qAns[0]}</button>
+            <button class="opB w-[21rem] lg:w-[30rem] mt-6 h-14 text-xl text-[#DFE0E2] bg-[#EB5160] shadow-lg hover:shadow-[#eb5161b9] ease-in-out transition-all delay-150 rounded font-Montserrat hover:outline-none hover:border-none">${QandA[qType][qNum].qAns[1]}</button>
+            <button class="opC w-[21rem] lg:w-[30rem] mt-6 h-14 text-xl text-[#DFE0E2] bg-[#EB5160] shadow-lg hover:shadow-[#eb5161b9] ease-in-out transition-all delay-150 rounded font-Montserrat hover:outline-none hover:border-none">${QandA[qType][qNum].qAns[2]}</button>
+            <button class="opD w-[21rem] lg:w-[30rem] mt-6 h-14 text-xl text-[#DFE0E2] bg-[#EB5160] shadow-lg hover:shadow-[#eb5161b9] ease-in-out transition-all delay-150 rounded font-Montserrat hover:outline-none hover:border-none">${QandA[qType][qNum].qAns[3]}</button>
         </div>
         </div>`;
     page.innerHTML = elements;
@@ -122,10 +122,10 @@ let QuizApp = {
             e.preventDefault();
             arrayOfUserAnswers[qNum] = btn.innerText;
             if((btn.innerText).toUpperCase() === (QandA[qType][qNum].qrAns).toUpperCase()){
-                btn.classList.replace("hover:bg-[#AAAAAA]","hover:bg-green-500");
+                btn.classList.replace("bg-[#EB5160]","bg-green-500");
                 score += 10;
             }else{
-                btn.classList.replace("hover:bg-[#AAAAAA]","hover:bg-red-500");
+                btn.classList.replace("bg-[#EB5160]","bg-red-900");
             }
 
             let j = 0;
@@ -310,7 +310,7 @@ let QuizApp = {
 
 }
 
-// QuizApp.loadFor3s();
+QuizApp.loadFor3s();
 
 
 
