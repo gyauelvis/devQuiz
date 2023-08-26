@@ -1,12 +1,7 @@
 import QandA from './q.js'
 
-let qNum = 0;
-let score = 0;
-let finalScore = 0;
-let qt;
-let page = document.querySelector('.startPage');
-let arrayOfUserAnswers = [];
-let num = 0;
+let qNum = 0,score = 0,finalScore = 0,qt,page = document.querySelector('.startPage'), arrayOfUserAnswers = [],num = 0;
+let highScores =[];
 
 let QuizApp = {
     loading:`<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADwUlEQVR4nO1ZTU8UQRCdRKOe9Kxiokb9BwKCiYloQqKwVZvsCdmqVeRmIsjH0YMf6D8QIh6ECyEkinjE/6AXBFETBHG7B1QwrB7ImprpGRZ2YZc47DJmX1JJp2e2u1/Xq56qXssqo4wySob5hmsnNFCrmLStMMIGJg2c0shpx4BT0meFCd+iiZOycAW0qpAGHANa1cArofKMFjkhpxXwc69PyLh9dNMKHRGkAa9PAQ+Gjsi8E+RGWsCDrhlpReh4rt/Y2FKhgYYV0pKxERXl04EvLh2L7VPIjzXwV4U0p5B7pC9PsK9kBPuKjfH4ZiQU0IL/rjHps2Pxo4ESUUCPsiZCerjVb2T3RUpim3lCIJ5wx6RXsnAxDTxm5hkKlgjSnAycjHBNMkq1hshcQGMvyXh2xu4vRPiY8cqPIObIJhKlWp8I8GwwY/NPhwi2VBSBCPdslJYGehDM2DRi4mhMyJjAf23mGLZ2INh7nEAHnhUSWwX7dqCg+YxCtnMFe7LhxikrTHACHHlIZOZIDWg4dCTKKKMEsJGqFSbaxOzGRJUVNizGWg/5R/C6I5/H5Nl2B2qV9GJbPwwI2pBQyN81cq+YaUtGMbodEh8zdmK6mGRspGqPRGaOJlm1R8aGeGXB9YQGfquR3hW7jtBRumPmfJL1zPWOpEfthRNxSBSfiAJuN0rozVobcp/rrURbYdJCnl6TFn2w65sOWkWC3Zio8qWVUePLXYAkkWZdZwsaTMg4tQRySzFJePDqERMT4oU+j4QCfmmFBYuykUijOYq5F6XY2H+GDfFK94NItwuWUxllrEFB4qoCGtfIvzTQsrQV0hUrTNDI97NyKvSP/ntWWDxhFvxbI3cobDospoE6TV86cM8kkeoV0BeFNCPtIMZUwG/M7ndsfKYj1GWyivEg5lqbFGkm4zyf2erd9IW7e23ky5JuiNnRxCXp2+xOS7xgbSTSeP2ImWupJESSkDivgaZyaH5S7sRKTiQp0kKa2UpaDgmjbZOvObWEn7sBp+S20ifinlRyf9WZRQS5e0eklQ8inQxPPJ2qv7XfeyZtjdRvdvi9JzMJZD/YI9TleMH1RLcC/rMjwZ4PEhOeJzJJePhMdMAv2CJU5/XLEburjl9tCqJcdUS+wkh2XYnMgJZL/kEskEhfwRVeqSBHbF5pIX8y71y0divSEuzIk0bb/bLwDfHxzHhjItc3ZVfB/e/EHL9uYPcaObmeAE4tQPM5KwxIRrhGjtjsvwl4IjQk1sksQnXedae007HYHv+FMv5z/AX1u7rsGeHtxQAAAABJRU5ErkJggg==" class="animate-spin">`,
@@ -29,7 +24,7 @@ let QuizApp = {
             border-[#EB5160] ease-in-out transition-colors delay-150">
         </div>
         <div class="buttons flex flex-col items-center">
-        <button class="save w-[21rem] lg:w-[30rem] mt-6 h-12 text-lg bg-[#DFE0E2] text-black hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">
+        <button class="save w-[21rem] lg:w-[30rem] mt-6 h-12 text-lg bg-[#DFE0E2] text-black hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150 rounded opacity-50 cursor-not-allowed">
             Save
         </button>
         <button class="play_again w-[21rem] lg:w-[30rem] mt-6 h-12 text-lg bg-[#DFE0E2] text-black hover:bg-[#AAAAAA] ease-in-out transition-colors delay-150">
@@ -147,36 +142,60 @@ let QuizApp = {
         })
     })
     },
+
+    endPage(){
+            finalScore = score;
+            page.innerHTML = this.finalScorePage;
+            document.querySelector('.points').textContent = finalScore;
+            document.querySelector('.play_again').addEventListener('click',(e) =>{
+                score = 0;
+                this.playAgain(qt);
+            });
+            document.querySelector('.select_newquiz').addEventListener('click',(e) =>{
+                score = 0;
+                this.startGame();
+            });
+            document.querySelector('.go_home').addEventListener('click',(e) =>{
+                score = 0;
+                page.innerHTML = this.loading;
+                this.loadFor3s();
+            });
+
+            document.querySelector('.save').addEventListener('mouseover',(e)=>{
+                if(QuizApp.isInputEmpty()){
+                    document.querySelector('.save').classList.remove('opacity-50');
+                    document.querySelector('.save').classList.remove('cursor-not-allowed');
+                    console.log('done');
+                }else{
+                    document.querySelector('.save').classList.add('opacity-50');
+                    document.querySelector('.save').classList.add('cursor-not-allowed');
+                }
+            });
+
+            document.querySelector('.save').addEventListener("click",(e)=>{
+                e.preventDefault();
+                if(QuizApp.isInputEmpty()){
+                    
+                    QuizApp.playerInfo(document.getElementById('userName').value);
+                }
+            })
+
+
+            document.querySelector('.review_quiz').addEventListener('click', (e)=>{
+                e.preventDefault();
+                QuizApp.reviewQuiz(qt);
+            })
+    },
+
     gotoNextQuestion(){
         if(qNum<9){
             qNum++;
             this.getGenQuestion(qt);
         }else{
-            finalScore = score;
+            this.endPage();
+            
             qNum = 0;
-            score = 0;
-            page.innerHTML = this.finalScorePage;
-            document.querySelector('.points').textContent = finalScore;
-            document.querySelector('.play_again').addEventListener('click',(e) =>{
-                this.playAgain(qt)
-            });
-            document.querySelector('.select_newquiz').addEventListener('click',(e) =>{
-                this.startGame();
-            });
-            document.querySelector('.go_home').addEventListener('click',(e) =>{
-                page.innerHTML = this.loading;
-                this.loadFor3s();
-            });
-
-            document.querySelector('.save').addEventListener('click',(e)=>{
-                if(!QuizApp.isInputEmpty()){
-                    document.querySelector('.save').classList.add('active');
-                }
-            });
-            document.querySelector('.review_quiz').addEventListener('click', (e)=>{
-                e.preventDefault();
-                QuizApp.reviewQuiz(qt);
-            })
+           
         }
         
     },
@@ -197,6 +216,11 @@ let QuizApp = {
     reviewQuiz(qType){
 
         let revHolder =`
+
+        <div class="close back material-symbols-outlined text-[#EB5160] text-lg">
+                close
+        </div>
+
         <div class="rewiewQuiz flex flex-col px-5 font-Montserrat items-start w-90% lg:w-[30rem] relative">
         <div class="revQuestion text-gray-200 text-2xl py-5">
             ${(QandA[qType])[num].q}
@@ -238,8 +262,10 @@ let QuizApp = {
         e.preventDefault();
         QuizApp.goForward();
     });
-    
-        
+    document.querySelector(".close").addEventListener("click",(e)=>{
+        e.preventDefault();
+        this.closeRev();
+    });
     },
 
     goForward(){
@@ -254,11 +280,37 @@ let QuizApp = {
             num--;
             this.reviewQuiz(qt);
         }
+    },
+    closeRev() {
+        this.endPage();
+    },
+
+    playerInfo(username){
+        let userInfo = {
+            score: this.finalScore,
+            name: username,
+            quizTitle: qt,
+        }
+        return userInfo;
+    },
+
+    insertInArray(userObj){
+        if(highScores.length != 0){
+            highScores.forEach((highScore)=>{
+                if(highScore.score < userObj.score){
+                    highScores.indexOf(highScore)
+                }
+            })
+
+        }else{
+            highScores.push(userObj);
+        }
     }
+
 
 }
 
-QuizApp.loadFor3s();
+// QuizApp.loadFor3s();
 
 
 
