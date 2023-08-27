@@ -295,15 +295,20 @@ let QuizApp = {
     },
 
     insertInArray(userObj){
-        if(highScores.length != 0){
-            highScores.forEach((highScore)=>{
-                if(highScore.score < userObj.score){
-                    highScores.indexOf(highScore)
+        highScores.push(userObj);
+        //sorting the array
+        let i,j;
+        if(highScores.length >1){
+            highScores.forEach((hscore)=>{
+                i = highScores.indexOf(hscore);
+                if(i > -1 && i != highScores.length - 1){
+                    if(hscore.score < highScores[i+1]){
+                        j = hscore;
+                        highScores[i] = highScores[i+1];
+                        highScores[i+1] = j;
+                    }
                 }
             })
-
-        }else{
-            highScores.push(userObj);
         }
     }
 
