@@ -45,6 +45,8 @@ let QuizApp = {
     questions_placeholder:``,
     startGame(){
         page.innerHTML=this.loading;
+        score = 0;
+        finalScore = 0;
         let timer = 0;
         let interValId;
 
@@ -88,6 +90,10 @@ let QuizApp = {
                     e.preventDefault();
                     this.startGame();
                 })
+                document.querySelector('.highScore').addEventListener('click',(e)=>{
+                    e.preventDefault();
+                    this.highScorePage();
+                })
                 clearInterval(interValId);
             }
         },1000)
@@ -115,6 +121,8 @@ let QuizApp = {
             <button class="opC w-[21rem] lg:w-[30rem] mt-6 h-14 text-xl text-[#DFE0E2] bg-[#EB5160] shadow-lg hover:shadow-[#eb5161b9] ease-in-out transition-all delay-150 rounded font-Montserrat hover:outline-none hover:border-none">${QandA[qType][qNum].qAns[2]}</button>
             <button class="opD w-[21rem] lg:w-[30rem] mt-6 h-14 text-xl text-[#DFE0E2] bg-[#EB5160] shadow-lg hover:shadow-[#eb5161b9] ease-in-out transition-all delay-150 rounded font-Montserrat hover:outline-none hover:border-none">${QandA[qType][qNum].qAns[3]}</button>
         </div>
+        <audio id="correct" src="./audio/right.mp3"></audio>
+        <audio id="wrong" src="./audio/wrong.m4a"></audio>
         </div>`;
     page.innerHTML = elements;
     document.querySelectorAll("button").forEach((btn)=>{
@@ -123,9 +131,11 @@ let QuizApp = {
             arrayOfUserAnswers[qNum] = btn.innerText;
             if((btn.innerText).toUpperCase() === (QandA[qType][qNum].qrAns).toUpperCase()){
                 btn.classList.replace("bg-[#EB5160]","bg-green-500");
+                document.getElementById("correct").play();
                 score += 10;
             }else{
                 btn.classList.replace("bg-[#EB5160]","bg-red-900");
+                document.getElementById("wrong").play();
             }
 
             let j = 0;
@@ -165,7 +175,6 @@ let QuizApp = {
                 if(QuizApp.isInputEmpty()){
                     document.querySelector('.save').classList.remove('opacity-50');
                     document.querySelector('.save').classList.remove('cursor-not-allowed');
-                    console.log('done');
                 }else{
                     document.querySelector('.save').classList.add('opacity-50');
                     document.querySelector('.save').classList.add('cursor-not-allowed');
@@ -175,8 +184,10 @@ let QuizApp = {
             document.querySelector('.save').addEventListener("click",(e)=>{
                 e.preventDefault();
                 if(QuizApp.isInputEmpty()){
-                    
-                    QuizApp.playerInfo(document.getElementById('userName').value);
+                    let userName = document.getElementById('userName');
+                    let userInformation = this.playerInfo(userName.value);
+                    this.insertInArray(userInformation);
+                    this.loadFor3s();
                 }
             })
 
@@ -217,9 +228,9 @@ let QuizApp = {
 
         let revHolder =`
 
-        <div class="close back material-symbols-outlined text-[#EB5160] text-lg">
+        <a href="#" class="close back material-symbols-outlined text-[#EB5160] text-lg">
                 close
-        </div>
+        </a>
 
         <div class="rewiewQuiz flex flex-col px-5 font-Montserrat items-start w-90% lg:w-[30rem] relative">
         <div class="revQuestion text-gray-200 text-2xl py-5">
@@ -287,7 +298,7 @@ let QuizApp = {
 
     playerInfo(username){
         let userInfo = {
-            score: this.finalScore,
+            score: finalScore,
             name: username,
             quizTitle: qt,
         }
@@ -297,23 +308,42 @@ let QuizApp = {
     insertInArray(userObj){
         highScores.push(userObj);
         //sorting the array
-        let i,j;
         if(highScores.length >1){
-            highScores.forEach((hscore)=>{
-                i = highScores.indexOf(hscore);
-                if(i > -1 && i != highScores.length - 1){
-                    if(hscore.score < highScores[i+1]){
-                        j = hscore;
-                        highScores[i] = highScores[i+1];
-                        highScores[i+1] = j;
-                    }
-                }
-            })
-        }
+            highScores.sort((a, b) =>(b.score - a.score));
+         }
+        
+    },
+    highScorePage(){
+        let hpage = `<div class="container flex justify-center items-center flex-col">
+        <div class="header grid grid-cols-3 text-[#EB5160] font-br text-2xl place-content-center gap-20 md:gap-52 border-b-2 border-[#aaa]">
+            <span>Name</span><span>Quiz</span><span>Score</span>
+        </div>
+        <div class="scoreBody grid grid-cols-3 gap-x-[6.3rem] gap md:gap-x-[13.5rem] p-2">
+
+        </div>
+        <button class="go_home w-[21rem] lg:w-[30rem] mt-6 h-12 text-[#DFE0E2] bg-[#EB5160] shadow-lg hover:shadow-[#eb5161b9] ease-in-out transition-all delay-150 rounded font-Montserrat font-medium hover:outline-none hover:border-none">
+            Go Home
+        </button>
+     </div>`;
+     console.log(highScores);
+     page.innerHTML = hpage;
+     if(highScores.length > 0) {
+        console.log("ok");
+        highScores.forEach((hscore) => {
+            let elements = `
+            <div class="text-xl text-[#aaa] font-Montserrat">${hscore.name}</div>
+                <div class="text-xl text-[#aaa] font-Montserrat">${hscore.quizTitle}</div>
+                <div class="text-xl text-[#aaa] font-Montserrat">${hscore.score}</div>`;
+            document.querySelector('.scoreBody').insertAdjacentHTML('beforeend', elements);
+        })
+     }
+     document.querySelector('.go_home').addEventListener('click',(e) =>{
+        score = 0;
+        page.innerHTML = this.loading;
+        this.loadFor3s();
+    });
     }
-
-
-}
+};
 
 QuizApp.loadFor3s();
 
